@@ -1,0 +1,26 @@
+[package]
+name = "decarp"
+version = "0.1.0"
+edition = "2021"
+description = "Decrypt and display saved Apple Remote Desktop per-computer credentials on macOS"
+license = "MIT"
+repository = "https://github.com/mrbrutti/DecARP"
+readme = "README.md"
+keywords = ["apple-remote-desktop", "ard", "macos", "keychain", "credentials"]
+categories = ["command-line-utilities"]
+
+[[bin]]
+name = "decarp"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+plist = "1"
+md-5 = "0.10"
+aes = "0.8"
+comfy-table = "7"
+serde_json = "1"
+
+[profile.release]
+strip = true
+lto = true
