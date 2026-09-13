@@ -2,3 +2,8 @@
 **/*.rs.bk
 *.pdb
 .DS_Store
+
+# release artifacts
+/dist/
+decarp-*.tar.gz
+decarp-*.tar.gz.sha256
