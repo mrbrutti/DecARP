@@ -31,6 +31,7 @@ pub fn derive_key(master: &str) -> [u8; 16] {
 
 /// AES-128-ECB decrypt. Length must be a multiple of 16; trailing bytes beyond
 /// the archive are harmless (the parser stops at the archive's logical end).
+#[allow(clippy::chunks_exact_to_as_chunks)]
 pub fn decrypt_ecb(ciphertext: &[u8], key: &[u8; 16]) -> Vec<u8> {
     let cipher = Aes128::new(GenericArray::from_slice(key));
     let mut out = Vec::with_capacity(ciphertext.len());

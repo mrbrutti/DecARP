@@ -100,30 +100,18 @@ impl<'a> Reader<'a> {
         let h = self.head(head)?;
         if !(FIRST_TAG..=LAST_TAG).contains(&h) {
             // Literal single-byte value.
-            return Ok(if signed {
-                h as i64
-            } else {
-                (h as u8) as i64
-            });
+            return Ok(if signed { h as i64 } else { (h as u8) as i64 });
         }
         match h {
             TAG_INTEGER_2 => {
                 let b = self.read_exact(2)?;
                 let v = u16::from_le_bytes([b[0], b[1]]);
-                Ok(if signed {
-                    (v as i16) as i64
-                } else {
-                    v as i64
-                })
+                Ok(if signed { (v as i16) as i64 } else { v as i64 })
             }
             TAG_INTEGER_4 => {
                 let b = self.read_exact(4)?;
                 let v = u32::from_le_bytes([b[0], b[1], b[2], b[3]]);
-                Ok(if signed {
-                    (v as i32) as i64
-                } else {
-                    v as i64
-                })
+                Ok(if signed { (v as i32) as i64 } else { v as i64 })
             }
             _ => Err(format!("invalid integer tag {h} at offset {}", self.pos)),
         }
@@ -437,7 +425,9 @@ pub fn unarchive(data: &[u8]) -> Result<Value, String> {
     r.read_header()?;
     let mut root = Vec::new();
     r.read_typed_values(None, &mut root)?;
-    root.into_iter().next().ok_or_else(|| "empty archive".into())
+    root.into_iter()
+        .next()
+        .ok_or_else(|| "empty archive".into())
 }
 
 #[cfg(test)]

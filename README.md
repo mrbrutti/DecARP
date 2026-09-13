@@ -1,5 +1,7 @@
 # DecARP
 
+[![CI](https://github.com/mrbrutti/DecARP/actions/workflows/ci.yml/badge.svg)](https://github.com/mrbrutti/DecARP/actions/workflows/ci.yml)
+
 **Dec**rypt **A**pple **R**emote **D**esktop — a small macOS CLI that recovers the
 per-computer admin credentials Apple Remote Desktop (ARD) has saved on your Mac,
 and prints them as a table (or JSON).

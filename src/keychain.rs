@@ -28,7 +28,11 @@ pub fn master_password() -> Result<String, String> {
         let err = err.trim();
         return Err(format!(
             "keychain lookup failed for \"{SERVICE}\" / \"{ACCOUNT}\": {}",
-            if err.is_empty() { "item not found" } else { err }
+            if err.is_empty() {
+                "item not found"
+            } else {
+                err
+            }
         ));
     }
 
@@ -48,7 +52,7 @@ pub fn master_password() -> Result<String, String> {
 }
 
 fn try_hex(s: &str) -> Option<Vec<u8>> {
-    if s.is_empty() || s.len() % 2 != 0 || !s.bytes().all(|b| b.is_ascii_hexdigit()) {
+    if s.is_empty() || !s.len().is_multiple_of(2) || !s.bytes().all(|b| b.is_ascii_hexdigit()) {
         return None;
     }
     let bytes: Vec<u8> = (0..s.len())

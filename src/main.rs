@@ -73,9 +73,8 @@ fn run(cli: Cli) -> Result<(), String> {
         ));
     }
     let plaintext = crypto::decrypt_ecb(&prefs.access_credentials, &key);
-    let root = typedstream::unarchive(&plaintext).map_err(|e| {
-        format!("failed to decode credentials (wrong master password?): {e}")
-    })?;
+    let root = typedstream::unarchive(&plaintext)
+        .map_err(|e| format!("failed to decode credentials (wrong master password?): {e}"))?;
 
     // 4. Build uuid -> credential map.
     let creds = extract_creds(&root);
@@ -176,11 +175,17 @@ fn print_json(rows: &[(prefs::Computer, Option<&Cred>)], show_secret: bool) {
             obj.insert("name".into(), c.name.clone().into());
             obj.insert(
                 "address".into(),
-                c.address.clone().map(Into::into).unwrap_or(serde_json::Value::Null),
+                c.address
+                    .clone()
+                    .map(Into::into)
+                    .unwrap_or(serde_json::Value::Null),
             );
             obj.insert(
                 "uuid".into(),
-                c.uuid.clone().map(Into::into).unwrap_or(serde_json::Value::Null),
+                c.uuid
+                    .clone()
+                    .map(Into::into)
+                    .unwrap_or(serde_json::Value::Null),
             );
             match cred {
                 Some(cr) => {
